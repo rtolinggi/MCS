@@ -4,7 +4,9 @@ import bcrypt from "bcrypt";
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await UserModel.findAll();
+    const users = await UserModel.findAll({
+      attributes: ["id", "name", "email", "avatar", "createdAt", "updatedAt"],
+    });
     res.json(users);
   } catch (error) {
     console.log(error);
@@ -37,8 +39,9 @@ export const Login = async (req, res) => {
         email: req.body.email,
       },
     });
+    if (user.length == 0) return res.json({ message: "Email Not Found" });
     const match = await bcrypt.compare(req.body.password, user[0].password);
-    if (!match) return res.status(400).json({ message: "Invalid Credintial" });
+    if (!match) return res.status(400).json({ message: "Invalid Credential" });
     const user_id = user[0].id;
     const user_name = user[0].name;
     const user_email = user[0].email;
@@ -70,6 +73,6 @@ export const Login = async (req, res) => {
     });
     res.json({ accesToken });
   } catch (error) {
-    res.status(404).json({ message: "email not found" });
+    res.status(404).json({ message: error });
   }
 };
