@@ -1,5 +1,5 @@
 import express from "express";
-import db from "./config/config.js";
+import db from "./config/database.js";
 import UserModel from "./models/UserModel.js";
 import router from "./routes/index.js";
 
