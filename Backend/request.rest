@@ -5,9 +5,18 @@ POST http://127.0.0.1:5000/users
 Content-Type: application/json
 
 {
-    "name":"admin",
-    "email":"admin@gmail.com",
+    "name":"admin2",
+    "email":"admin2@gmail.com",
     "avatar":"avatar.png",
-    "password":"password",
+    "password":"passwords",
     "confirmPassword":"password"
+}
+
+###
+POST http://127.0.0.1:5000/login 
+Content-Type: application/json
+
+{
+    "email":"admin@gmail.com",
+    "password":"password"
 }
