@@ -76,3 +76,25 @@ export const Login = async (req, res) => {
     res.status(404).json({ message: error });
   }
 };
+
+export const Logout = async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) return res.sendStatus(204);
+  const user = await UserModel.findAll({
+    where: {
+      refresh_token: refreshToken,
+    },
+  });
+  if (!user[0]) return res.sendStatus(204);
+  const user_id = user[0].id;
+  await UserModel.update(
+    { refresh_token: null },
+    {
+      where: {
+        id: user_id,
+      },
+    }
+  );
+  res.clearCookie("refreshToken");
+  return res.status(200).json({ message: "Logout Success" });
+};

@@ -2,6 +2,7 @@ import express from "express";
 import db from "./config/database.js";
 import UserModel from "./models/UserModel.js";
 import router from "./routes/UserRoute.js";
+import cookieParser from "cookie-parser";
 import "dotenv/config";
 
 const app = express();
@@ -15,6 +16,7 @@ try {
   console.log(errors);
 }
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(router);
 
