@@ -1,0 +1,13 @@
+GET http://127.0.0.1:5000/users
+
+###
+POST http://127.0.0.1:5000/users 
+Content-Type: application/json
+
+{
+    "name":"admin",
+    "email":"admin@gmail.com",
+    "avatar":"avatar.png",
+    "password":"password",
+    "confirmPassword":"password"
+}
