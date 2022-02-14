@@ -1,6 +1,7 @@
 import express from "express";
 import db from "./config/config.js";
-import router from "./routes/usersRoute.js";
+import UserModel from "./models/UserModel.js";
+import router from "./routes/index.js";
 
 const app = express();
 const PORT = 5000;
@@ -14,6 +15,6 @@ try {
 }
 
 app.use(express.json());
-// app.use(router);
+app.use(router);
 
 app.listen(PORT, () => console.log(`server running at port ${PORT}`));
