@@ -2,36 +2,117 @@ import UserModel from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+// Find all Users or By name & email
 export const getUsers = async (req, res) => {
   try {
-    const users = await UserModel.findAll({
-      attributes: ["id", "name", "email", "avatar", "createdAt", "updatedAt"],
-    });
+    const column = ["id", "name", "email", "avatar", "createdAt", "updatedAt"];
+    const find = req.query;
+    let query;
+    if ("email" in find) {
+      query = {
+        where: {
+          email: find.email,
+        },
+        attributes: column,
+      };
+    } else if ("name" in find) {
+      query = {
+        where: {
+          name: find.name,
+        },
+        attributes: column,
+      };
+    } else {
+      query = {
+        attributes: ["id", "name", "email", "avatar", "createdAt", "updatedAt"],
+      };
+    }
+    const users = await UserModel.findAll(query);
     res.json(users);
   } catch (error) {
     console.log(error);
   }
 };
 
+// find users by id
+export const getUsersId = async (req, res) => {
+  try {
+    const user_id = req.params.id;
+    const user = await UserModel.findByPk(user_id, {
+      attributes: ["id", "name", "email", "avatar", "createdAt", "updatedAt"],
+    });
+    if (!user)
+      return res.status(200).json({
+        message: "Data Not Found",
+      });
+    return res.status(200).json(user);
+  } catch (error) {
+    res.status(401).json(error);
+  }
+};
+
+// update user By id
+export const updateUserById = async (req, res) => {
+  try {
+    const user_id = req.params.id;
+    await UserModel.update(
+      {
+        name: req.body.name,
+        avatar: req.body.avatar,
+      },
+      {
+        where: {
+          id: user_id,
+        },
+      }
+    );
+    const user = await UserModel.findByPk(user_id, {
+      attributes: ["id", "name", "email", "avatar"],
+    });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(401).json(error);
+  }
+};
+
+// Delete user By UserId
+export const deleteUserById = async (req, res) => {
+  try {
+    const user_id = req.params.id;
+    console.log(user_id);
+    await UserModel.destroy({
+      where: {
+        id: user_id,
+      },
+    });
+    res.status(200).json({ message: "Deleted Succes" });
+  } catch (error) {
+    res.status(401).json(error);
+  }
+};
+
+// register user
 export const Register = async (req, res) => {
   const { name, email, avatar, password, confirmPassword } = req.body;
   if (password !== confirmPassword)
     return res.status(400).json({ message: "Password not match" });
   const salt = await bcrypt.genSalt();
   const hashPassword = await bcrypt.hash(password, salt);
+  const userData = {
+    name: name,
+    email: email,
+    avatar: avatar,
+    password: hashPassword,
+  };
   try {
-    await UserModel.create({
-      name: name,
-      email: email,
-      avatar: avatar,
-      password: hashPassword,
-    });
-    res.json({ msg: "Register Success" });
+    await UserModel.create(userData);
+    res.json({ msg: "Register Success", data: userData });
   } catch (error) {
     console.log(error);
   }
 };
 
+// login user
 export const Login = async (req, res) => {
   try {
     const user = await UserModel.findAll({

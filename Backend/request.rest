@@ -1,14 +1,36 @@
 GET http://127.0.0.1:5000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJ1c2VyX25hbWUiOiJ1c2VyIiwidXNlcl9lbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ0OTQxOTQzLCJleHAiOjE2NDQ5NDE5NTh9.vquhXcCr21ZkaxN1KEXm4mnh7SRzbtyEGSDPMaJqGBE
+
+###
+GET http://127.0.0.1:5000/users/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJ1c2VyX25hbWUiOiJ1c2VyIiwidXNlcl9lbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ0OTM5MzE5LCJleHAiOjE2NDQ5MzkzMzR9.QQcM3pwV71QpSLorXCZSpyn_f_JDfxcQZ-ANtLcLX98
+###
+PUT http://127.0.0.1:5000/users/1 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJ1c2VyX25hbWUiOiJ1c2VyIiwidXNlcl9lbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ0OTQyMDE4LCJleHAiOjE2NDQ5NDIwMzN9.KAGMza8sZte0l3cndQK4v4dd-dkQT0ahmrMtco4DsiM
+
+{
+    "name":"admin",
+    "avatar":"profil.jpg"
+}
+
+###
+DELETE  http://127.0.0.1:5000/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJ1c2VyX25hbWUiOiJ1c2VyIiwidXNlcl9lbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ0OTQyMDQ4LCJleHAiOjE2NDQ5NDIwNjN9.01rYo1Ym-sEc7e8Bi-Cxi0ghDAv7KlrD5iBNvDjQwMw
+
+
+###
+GET http://127.0.0.1:5000/token 
 
 ###
 POST http://127.0.0.1:5000/users 
 Content-Type: application/json
 
 {
-    "name":"admin2",
-    "email":"admin2@gmail.com",
+    "name":"rtolinggi",
+    "email":"rtolinggi91@gmail.com",
     "avatar":"avatar.png",
-    "password":"passwords",
+    "password":"password",
     "confirmPassword":"password"
 }
 
@@ -17,6 +39,9 @@ POST http://127.0.0.1:5000/login
 Content-Type: application/json
 
 {
-    "email":"admin@gmail.com",
+    "email":"user@gmail.com",
     "password":"password"
 }
+
+###
+DELETE http://127.0.0.1:5000/logout
